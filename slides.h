@@ -15,6 +15,9 @@ class Slides : public QMainWindow
 		Slides(QWidget *parent = nullptr);
 		~Slides();
 
+	private slots:
+		void on_pushButton_3_clicked();
+
 	private:
 		Ui::Slides *ui;
 };
