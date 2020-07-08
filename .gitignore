@@ -71,3 +71,6 @@ Thumbs.db
 *.dll
 *.exe
 
+# QtCtreator CMake
+CMakeLists.txt.user
+CMakeLists.txt.user.0a26a0e
