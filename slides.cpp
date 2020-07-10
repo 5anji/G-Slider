@@ -45,6 +45,7 @@ void Slides::set_timer()
 
 void Slides::timer_event()
 {
+	stop_timer();
 	next_image();
 }
 
