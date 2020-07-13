@@ -18,6 +18,8 @@ class Slides : public QMainWindow
 		~Slides();
 
 	private slots:
+		int rand_int(int low, int high);
+
 		void set_image(QString path);
 
 		void set_timer();
@@ -30,6 +32,8 @@ class Slides : public QMainWindow
 
 		void previous_image();
 
+		void next_shuffle_image();
+
 		void on_pushButton_clicked();
 
 		void on_pushButton_2_clicked();
@@ -37,6 +41,8 @@ class Slides : public QMainWindow
 		void on_pushButton_3_clicked();
 
 		void on_comboBox_activated(int index);
+
+		void on_checkBox_stateChanged(int arg1);
 
 	private:
 		Ui::Slides *ui;
