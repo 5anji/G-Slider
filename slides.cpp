@@ -6,6 +6,7 @@
 #include <QDir>
 #include <QDebug>
 #include <QFileDialog>
+#include <QInputDialog>
 #include <QPixmap>
 #include <QTimer>
 #include <QTime>
@@ -184,8 +185,10 @@ void Slides::on_comboBox_activated(int index)
 			set_timer();
 		break;
 		case 6:
-			//			period = 10;
-			//			set_timer();
+			bool ok;
+			stop_timer();
+			period = QInputDialog::getInt(this, tr("Input period"), tr("Seconds:"), 30, 5, 3600, 5, &ok);
+			set_timer();
 		break;
 		default:
 			stop_timer();
