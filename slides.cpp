@@ -124,7 +124,7 @@ void Slides::on_pushButton_3_clicked()
 	stop_timer();
 	count = 0;
 	path = QFileDialog::getExistingDirectory(this, tr("Open Directory"), "/home", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-	QStringList images = path.entryList(QStringList() << "*.jpg" << "*.png", QDir::Files);
+	QStringList images = path.entryList(QStringList() << "*.jpg" << "*.jpeg" << "*.bmp" << "*.pbm" << "*.pgm" << "*.ppm" << "*.xbm" << "*.xpm" << "*.png", QDir::Files);
 
 	foreach(QString filename, images)
 	{
