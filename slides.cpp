@@ -101,21 +101,41 @@ void Slides::previous_image()
 
 void Slides::next_shuffle_image()
 {
+	int temp = i;
+
+	LOOP:
 	i = rand_int(0, count - 1);
+	if (i == temp) goto LOOP;
+
 	set_image(image_directory[i]);
 }
 
 void Slides::on_pushButton_clicked()
 {
 	stop_timer();
-	next_image();
+	if (shuffle_checker)
+	{
+		next_shuffle_image();
+	}
+	else
+	{
+		next_image();
+	}
 	set_timer();
 }
 
 void Slides::on_pushButton_2_clicked()
 {
 	stop_timer();
-	previous_image();
+	if (shuffle_checker)
+	{
+		next_shuffle_image();
+	}
+	else
+	{
+		previous_image();
+	}
+
 	set_timer();
 }
 

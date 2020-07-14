@@ -68,6 +68,10 @@
       <height>450</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(46, 52, 54);
+border-color: rgb(0, 0, 0);</string>
+    </property>
     <property name="text">
      <string/>
     </property>
