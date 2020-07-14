@@ -7,6 +7,7 @@
 #include <QDebug>
 #include <QFileDialog>
 #include <QInputDialog>
+#include <QComboBox>
 #include <QPixmap>
 #include <QTimer>
 #include <QTime>
@@ -158,6 +159,8 @@ void Slides::on_pushButton_3_clicked()
 
 void Slides::on_comboBox_activated(int index)
 {
+	ui->comboBox->QComboBox::setItemText(0, "Stop");
+
 	switch (index) {
 		case 1:
 			stop_timer();
