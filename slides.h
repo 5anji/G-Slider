@@ -38,11 +38,31 @@ class Slides : public QMainWindow
 
 		void on_pushButton_2_clicked();
 
-		void on_pushButton_3_clicked();
+		void on_actionExit_triggered();
 
-		void on_comboBox_activated(int index);
+		void on_actionOpen_triggered();
 
-		void on_checkBox_stateChanged(int arg1);
+		void on_actionNext_image_triggered();
+
+		void on_actionPrevious_image_triggered();
+
+		void on_action30_seconds_triggered();
+
+		void on_action1_minute_triggered();
+
+		void on_action2_minutes_triggered();
+
+		void on_action5_minutes_triggered();
+
+		void on_action10_minutes_triggered();
+
+		void on_actionCustom_triggered();
+
+		void on_actionStop_triggered();
+
+		void on_actionChange_image_randomly_triggered();
+
+		void on_actionShuffle_toggled(bool arg1);
 
 	private:
 		Ui::Slides *ui;

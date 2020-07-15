@@ -1,17 +1,17 @@
 #include "slides.h"
 #include "./ui_slides.h"
 
-#include <QString>
-#include <QStringList>
-#include <QDir>
+#include <QComboBox>
 #include <QDebug>
+#include <QDir>
 #include <QFileDialog>
 #include <QInputDialog>
-#include <QComboBox>
-#include <QPixmap>
-#include <QTimer>
-#include <QTime>
 #include <QMessageBox>
+#include <QPixmap>
+#include <QString>
+#include <QStringList>
+#include <QTime>
+#include <QTimer>
 
 QString image_directory[128];
 QDir path;
@@ -141,7 +141,7 @@ void Slides::on_pushButton_2_clicked()
 	set_timer();
 }
 
-void Slides::on_pushButton_3_clicked()
+void Slides::on_actionOpen_triggered()
 {
 	stop_timer();
 	count = 0;
@@ -157,52 +157,77 @@ void Slides::on_pushButton_3_clicked()
 	set_timer();
 }
 
-void Slides::on_comboBox_activated(int index)
+void Slides::on_actionExit_triggered()
 {
-	ui->comboBox->QComboBox::setItemText(0, "Stop");
-
-	switch (index) {
-		case 1:
-			stop_timer();
-			period = 30;
-			set_timer();
-		break;
-		case 2:
-			stop_timer();
-			period = 60;
-			set_timer();
-		break;
-		case 3:
-			stop_timer();
-			period = 120;
-			set_timer();
-		break;
-		case 4:
-			stop_timer();
-			period = 300;
-			set_timer();
-		break;
-		case 5:
-			stop_timer();
-			period = 600;
-			set_timer();
-		break;
-		case 6:
-			bool ok;
-			stop_timer();
-			period = QInputDialog::getInt(this, tr("Input period"), tr("Seconds:"), 30, 5, 3600, 5, &ok);
-			set_timer();
-		break;
-		default:
-			stop_timer();
-		break;
-	}
+	close();
 }
 
-void Slides::on_checkBox_stateChanged(int arg1)
+void Slides::on_actionNext_image_triggered()
+{
+	next_image();
+}
+
+void Slides::on_actionPrevious_image_triggered()
+{
+	previous_image();
+}
+
+void Slides::on_action30_seconds_triggered()
 {
 	stop_timer();
-	if (arg1 == 2) shuffle_checker = true; else shuffle_checker = false;
+	period = 30;
+	set_timer();
+}
+
+void Slides::on_action1_minute_triggered()
+{
+	stop_timer();
+	period = 60;
+	set_timer();
+}
+
+void Slides::on_action2_minutes_triggered()
+{
+	stop_timer();
+	period = 120;
+	set_timer();
+}
+
+void Slides::on_action5_minutes_triggered()
+{
+	stop_timer();
+	period = 300;
+	set_timer();
+}
+
+void Slides::on_action10_minutes_triggered()
+{
+	stop_timer();
+	period = 600;
+	set_timer();
+}
+
+void Slides::on_actionCustom_triggered()
+{
+	stop_timer();
+	period = QInputDialog::getInt(this, tr("Input period"), tr("Seconds:"), 30, 5, 3600, 5);
+	set_timer();
+}
+
+void Slides::on_actionStop_triggered()
+{
+	stop_timer();
+}
+
+void Slides::on_actionChange_image_randomly_triggered()
+{
+	next_shuffle_image();
+}
+
+void Slides::on_actionShuffle_toggled(bool arg1)
+{
+	stop_timer();
+	if (arg1) shuffle_checker = true; else shuffle_checker = false;
 	set_timer();
 }
 
