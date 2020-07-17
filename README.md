@@ -4,7 +4,6 @@
 
 This is my first project made in Qt. I decided to use here <i>CMake</i>, instead of <i>QMake</i>.
 
-## First <i>Alpha</i> (ver. 0.1.2)
 
 ### Features:
 
@@ -12,18 +11,14 @@ This is my first project made in Qt. I decided to use here <i>CMake</i>, instead
 
 * <i>Select...</i> button - set period, that will automatically change images. In alpha doesn't work last option. Also, to stop the timer click on <i>Select...</i> again.
 
-* <i>Image scaling</i>, also aligned to the center.
-
-### Will be added:
-
-* <i>Shuffle</i> button
-
-* Support for more data types (without .gif)
-
-* Custom period of image changing
-
-* Preferred color scheme
+* Window resizing adaptation
 
 * Full-Screen mode by double-clicking
 
-* Window resizing adaptation
+* Custom period of image changing
+
+* <i>Image scaling</i>, also aligned to the center.
+
+* Support for more data types (without .gif)
+
+* <i>Shuffle</i> button
