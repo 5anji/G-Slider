@@ -20,7 +20,11 @@ class Slides : public QMainWindow
 	private slots:
 		int rand_int(int low, int high);
 
-		void set_image(QString path);
+		void image_renderer();
+
+		void set_image(QString a);
+
+		void set_animation();
 
 		void set_timer();
 
@@ -33,6 +37,10 @@ class Slides : public QMainWindow
 		void previous_image();
 
 		void next_shuffle_image();
+
+		void start_animation();
+
+		void end_animation();
 
 		void on_pushButton_clicked();
 

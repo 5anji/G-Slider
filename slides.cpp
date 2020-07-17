@@ -5,9 +5,11 @@
 #include <QDebug>
 #include <QDir>
 #include <QFileDialog>
+#include <QGraphicsOpacityEffect>
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QPixmap>
+#include <QPropertyAnimation>
 #include <QString>
 #include <QStringList>
 #include <QTime>
@@ -16,15 +18,17 @@
 QString image_directory[128];
 QDir path;
 int i, count, period;
-bool timer_checker, shuffle_checker = false, comboBox_checker;
+bool timer_checker, shuffle_checker, comboBox_checker, image_checker;
 
 Slides::Slides(QWidget *parent)
 	: QMainWindow(parent)
 	, ui(new Ui::Slides)
 {
 	ui->setupUi(this);
+
 	QTime time = QTime::currentTime();
 	qsrand((uint)time.msec());
+
 }
 
 int Slides::rand_int(int low, int high)
@@ -32,11 +36,22 @@ int Slides::rand_int(int low, int high)
 	return qrand() % ((high + 1) - low) + low;
 }
 
-void Slides::set_image(QString path)
+void Slides::image_renderer()
 {
-	QPixmap image = path;
+	set_image(image_directory[i]);
+}
+
+void Slides::set_image(QString a)
+{
+	QPixmap image = a;
 	ui->label->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 	ui->label->setPixmap(image.scaled(ui->label->width(), ui->label->height(), Qt::KeepAspectRatio));
+}
+
+void Slides::set_animation()
+{
+	start_animation();
+	QTimer::singleShot(0.5*1000, this, SLOT(end_animation()));
 }
 
 void Slides::set_timer()
@@ -77,39 +92,80 @@ void Slides::stop_timer()
 
 void Slides::next_image()
 {
-	if (i == count - 1)
+	if (image_checker)
 	{
-		i = 0;
+		if (i == count - 1)
+		{
+			i = 0;
+		}
+		else
+		{
+			i++;
+		}
+
+		set_animation();
+		QTimer::singleShot(0.5*1000, this, SLOT(image_renderer()));
 	}
-	else
-	{
-		i++;
-	}
-	set_image(image_directory[i]);
 }
 
 void Slides::previous_image()
 {
-	if (i == 0)
+	if (image_checker)
 	{
-		i = count - 1;
+		if (i == 0)
+		{
+			i = count - 1;
+		}
+		else
+		{
+			i--;
+		}
+
+		set_animation();
+		QTimer::singleShot(0.5*1000, this, SLOT(image_renderer()));
 	}
-	else
-	{
-		i--;
-	}
-	set_image(image_directory[i]);
 }
 
 void Slides::next_shuffle_image()
 {
-	int temp = i;
+	if (image_checker)
+	{
+		int temp = i;
 
-	LOOP:
-	i = rand_int(0, count - 1);
-	if (i == temp) goto LOOP;
+		LOOP:
+		i = rand_int(0, count - 1);
+		if (i == temp) goto LOOP;
 
-	set_image(image_directory[i]);
+		set_animation();
+		QTimer::singleShot(0.5*1000, this, SLOT(image_renderer()));
+	}
+}
+
+void Slides::start_animation()
+{
+	QGraphicsOpacityEffect *effect = new QGraphicsOpacityEffect();
+	QPropertyAnimation *anim = new QPropertyAnimation(effect,"opacity");
+
+	ui->label->setGraphicsEffect(effect);
+	anim->setDuration(0.5*1000);
+	anim->setStartValue(1.0);
+	anim->setEndValue(0.0);
+	anim->setEasingCurve(QEasingCurve::OutQuad);
+	connect(anim, &QPropertyAnimation::finished, [=](){});
+	anim->start(QAbstractAnimation::DeleteWhenStopped);
+}
+
+void Slides::end_animation()
+{
+	QGraphicsOpacityEffect *effect = new QGraphicsOpacityEffect();
+	QPropertyAnimation *anim = new QPropertyAnimation(effect,"opacity");
+
+	ui->label->setGraphicsEffect(effect);
+	anim->setDuration(0.5*1000);
+	anim->setStartValue(0.0);
+	anim->setEndValue(1.0);
+	connect(anim, &QPropertyAnimation::finished, [=](){});
+	anim->start(QAbstractAnimation::DeleteWhenStopped);
 }
 
 void Slides::on_pushButton_clicked()
@@ -144,6 +200,7 @@ void Slides::on_pushButton_2_clicked()
 void Slides::on_actionOpen_triggered()
 {
 	stop_timer();
+	image_checker = false;
 	count = 0;
 	path = QFileDialog::getExistingDirectory(this, tr("Open Directory"), "/home", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
 	QStringList images = path.entryList(QStringList() << "*.jpg" << "*.jpeg" << "*.bmp" << "*.pbm" << "*.pgm" << "*.ppm" << "*.xbm" << "*.xpm" << "*.png", QDir::Files);
@@ -153,7 +210,12 @@ void Slides::on_actionOpen_triggered()
 		image_directory[count] = path.filePath(filename);
 		count++;
 	}
-	set_image(image_directory[0]);
+
+	if (count > 0)
+	{
+		image_checker = true;
+		set_image(image_directory[0]);
+	}
 	set_timer();
 }
 
