@@ -10,6 +10,7 @@
 #include <QMessageBox>
 #include <QPixmap>
 #include <QPropertyAnimation>
+#include <QResizeEvent>
 #include <QString>
 #include <QStringList>
 #include <QTime>
@@ -18,7 +19,7 @@
 QString image_directory[128];
 QDir path;
 int i, count, period;
-bool timer_checker, shuffle_checker, comboBox_checker, image_checker;
+bool timer_checker, shuffle_checker, comboBox_checker, image_checker, mouse_click_checker;
 
 Slides::Slides(QWidget *parent)
 	: QMainWindow(parent)
@@ -29,6 +30,7 @@ Slides::Slides(QWidget *parent)
 	QTime time = QTime::currentTime();
 	qsrand((uint)time.msec());
 
+	ui->menubar->setStyleSheet("QToolBar {background: rgb(192,192,192)}");
 }
 
 int Slides::rand_int(int low, int high)
@@ -168,6 +170,29 @@ void Slides::end_animation()
 	anim->start(QAbstractAnimation::DeleteWhenStopped);
 }
 
+void Slides::uncheck_mouse_click()
+{
+	mouse_click_checker = false;
+}
+
+void Slides::resizeEvent(QResizeEvent *event)
+{
+	ui->label->resize(ui->centralwidget->width(), ui->centralwidget->height());
+
+	ui->pushButton->resize(ui->centralwidget->width() / 5, ui->centralwidget->height());
+	ui->pushButton->move(4 * ui->centralwidget->width() / 5, 0);
+
+	ui->pushButton_2->resize(ui->centralwidget->width() / 5, ui->centralwidget->height());
+
+	ui->pushButton_3->resize(3 * ui->centralwidget->width() / 5, ui->centralwidget->height());
+	ui->pushButton_3->move(ui->centralwidget->width() / 5, 0);
+	if (image_checker)
+	{
+		image_renderer();
+	}
+	QWidget::resizeEvent(event);
+}
+
 void Slides::on_pushButton_clicked()
 {
 	stop_timer();
@@ -195,6 +220,26 @@ void Slides::on_pushButton_2_clicked()
 	}
 
 	set_timer();
+}
+
+void Slides::on_pushButton_3_clicked()
+{
+	if (mouse_click_checker)
+	{
+		if (isFullScreen())
+		{
+			showNormal();
+		}
+		else
+		{
+			showFullScreen();
+		}
+	}
+	else
+	{
+		mouse_click_checker = true;
+		QTimer::singleShot(0.2*1000, this, SLOT(uncheck_mouse_click()));
+	}
 }
 
 void Slides::on_actionOpen_triggered()
@@ -291,6 +336,33 @@ void Slides::on_actionShuffle_toggled(bool arg1)
 	stop_timer();
 	if (arg1) shuffle_checker = true; else shuffle_checker = false;
 	set_timer();
+}
+
+void Slides::on_actionFull_screen_triggered()
+{
+	showFullScreen();
+}
+
+void Slides::on_actionMaximize_triggered()
+{
+	if (isMaximized())
+	{
+		showNormal();
+	}
+	else
+	{
+		showMaximized();
+	}
+}
+
+void Slides::on_actionMinimize_triggered()
+{
+	showMinimized();
+}
+
+void Slides::on_actionStandart_1280x720_triggered()
+{
+	setGeometry(15, 20, 1280, 720);
 }
 
 Slides::~Slides()

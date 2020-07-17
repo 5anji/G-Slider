@@ -7,13 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>1280</width>
-    <height>764</height>
+    <height>742</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Slides</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="minimumSize">
+    <size>
+     <width>640</width>
+     <height>480</height>
+    </size>
+   </property>
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
@@ -34,14 +40,14 @@ border-color: rgb(0, 0, 0);</string>
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>1100</x>
+      <x>1024</x>
       <y>0</y>
-      <width>180</width>
+      <width>256</width>
       <height>720</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">border: none</string>
+     <string notr="true">border:none</string>
     </property>
     <property name="text">
      <string/>
@@ -52,17 +58,37 @@ border-color: rgb(0, 0, 0);</string>
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>180</width>
+      <width>256</width>
       <height>720</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">border: none</string>
+     <string notr="true">border:none</string>
     </property>
     <property name="text">
      <string/>
     </property>
    </widget>
+   <widget class="QPushButton" name="pushButton_3">
+    <property name="geometry">
+     <rect>
+      <x>256</x>
+      <y>0</y>
+      <width>768</width>
+      <height>720</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border:none</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <zorder>label</zorder>
+   <zorder>pushButton_2</zorder>
+   <zorder>pushButton</zorder>
+   <zorder>pushButton_3</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -106,10 +132,20 @@ border-color: rgb(0, 0, 0);</string>
     <addaction name="menuAuto_switch_image"/>
     <addaction name="actionShuffle"/>
    </widget>
+   <widget class="QMenu" name="menuWindow">
+    <property name="title">
+     <string>Window</string>
+    </property>
+    <addaction name="actionFull_screen"/>
+    <addaction name="actionMaximize"/>
+    <addaction name="actionMinimize"/>
+    <addaction name="separator"/>
+    <addaction name="actionStandart_1280x720"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuImage"/>
+   <addaction name="menuWindow"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <action name="actionOpen">
    <property name="text">
     <string>Open...</string>
@@ -194,6 +230,35 @@ border-color: rgb(0, 0, 0);</string>
    </property>
    <property name="shortcut">
     <string>Space</string>
+   </property>
+  </action>
+  <action name="actionFull_screen">
+   <property name="text">
+    <string>Full-screen</string>
+   </property>
+   <property name="shortcut">
+    <string>F</string>
+   </property>
+  </action>
+  <action name="actionMaximize">
+   <property name="text">
+    <string>Maximize/Unmaximize</string>
+   </property>
+   <property name="shortcut">
+    <string>M</string>
+   </property>
+  </action>
+  <action name="actionMinimize">
+   <property name="text">
+    <string>Minimize</string>
+   </property>
+  </action>
+  <action name="actionStandart_1280x720">
+   <property name="text">
+    <string>Standart (1280x720)</string>
+   </property>
+   <property name="shortcut">
+    <string>N</string>
    </property>
   </action>
  </widget>

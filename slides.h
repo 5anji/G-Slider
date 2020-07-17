@@ -42,9 +42,13 @@ class Slides : public QMainWindow
 
 		void end_animation();
 
+		void uncheck_mouse_click();
+
 		void on_pushButton_clicked();
 
 		void on_pushButton_2_clicked();
+
+		void on_pushButton_3_clicked();
 
 		void on_actionExit_triggered();
 
@@ -72,7 +76,18 @@ class Slides : public QMainWindow
 
 		void on_actionShuffle_toggled(bool arg1);
 
+		void on_actionFull_screen_triggered();
+
+		void on_actionMaximize_triggered();
+
+		void on_actionMinimize_triggered();
+
+		void on_actionStandart_1280x720_triggered();
+
 	private:
 		Ui::Slides *ui;
+
+	protected:
+		void resizeEvent(QResizeEvent *event);
 };
 #endif // SLIDES_H
