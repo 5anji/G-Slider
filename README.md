@@ -5,7 +5,7 @@
 This is my first project made in Qt. I decided to use here <i>CMake</i>, instead of <i>QMake</i>.
 
 
-### Features:
+## Features
 
 * <i>Browse</i> button - creates path to folder where are the images. Accepts only <i>.jpg</i> and <i>.png </i>files.
 
@@ -22,3 +22,38 @@ This is my first project made in Qt. I decided to use here <i>CMake</i>, instead
 * Support for more data types (without .gif)
 
 * <i>Shuffle</i> button
+
+# Downloading & installing
+
+## Ubuntu
+
+1. Firstly install dependencies: 
+
+```sh
+sudo apt update && sudo apt install git cmake extra-cmake-modules qt5-default build-essential -y
+```
+
+2. Clone the repository:
+
+```sh
+git clone https://github.com/5anji/G-Slider
+```
+
+3. Enter the path:
+
+```sh
+cd G-Slider/
+```
+
+4. Build:
+
+```sh
+cmake CMakeLists.txt
+make
+```
+
+5. Run:
+
+```sh
+./Slideshow
+```

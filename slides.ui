@@ -30,8 +30,7 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(46, 52, 54);
-border-color: rgb(0, 0, 0);</string>
+     <string notr="true">border-color: rgb(0, 0, 0);</string>
     </property>
     <property name="text">
      <string/>
@@ -124,6 +123,16 @@ border-color: rgb(0, 0, 0);</string>
      <addaction name="actionCustom"/>
      <addaction name="actionStop"/>
     </widget>
+    <widget class="QMenu" name="menuAnimation">
+     <property name="title">
+      <string>Animation</string>
+     </property>
+     <addaction name="actionSlow"/>
+     <addaction name="actionNormal"/>
+     <addaction name="actionFast"/>
+     <addaction name="separator"/>
+     <addaction name="actionNone"/>
+    </widget>
     <addaction name="actionNext_image"/>
     <addaction name="actionPrevious_image"/>
     <addaction name="separator"/>
@@ -131,6 +140,7 @@ border-color: rgb(0, 0, 0);</string>
     <addaction name="separator"/>
     <addaction name="menuAuto_switch_image"/>
     <addaction name="actionShuffle"/>
+    <addaction name="menuAnimation"/>
    </widget>
    <widget class="QMenu" name="menuWindow">
     <property name="title">
@@ -259,6 +269,26 @@ border-color: rgb(0, 0, 0);</string>
    </property>
    <property name="shortcut">
     <string>N</string>
+   </property>
+  </action>
+  <action name="actionSlow">
+   <property name="text">
+    <string>Slow</string>
+   </property>
+  </action>
+  <action name="actionNormal">
+   <property name="text">
+    <string>Normal</string>
+   </property>
+  </action>
+  <action name="actionFast">
+   <property name="text">
+    <string>Fast</string>
+   </property>
+  </action>
+  <action name="actionNone">
+   <property name="text">
+    <string>None</string>
    </property>
   </action>
  </widget>

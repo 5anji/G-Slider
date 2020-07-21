@@ -19,7 +19,8 @@
 QString image_directory[128];
 QDir path;
 int i, count, period;
-bool timer_checker, shuffle_checker, comboBox_checker, image_checker, mouse_click_checker;
+float anim_period = 0.5;
+bool timer_checker, shuffle_checker, comboBox_checker, image_checker, mouse_click_checker, anim_checker;
 
 Slides::Slides(QWidget *parent)
 	: QMainWindow(parent)
@@ -53,7 +54,7 @@ void Slides::set_image(QString a)
 void Slides::set_animation()
 {
 	start_animation();
-	QTimer::singleShot(0.5*1000, this, SLOT(end_animation()));
+	QTimer::singleShot(anim_period*1000, this, SLOT(end_animation()));
 }
 
 void Slides::set_timer()
@@ -105,8 +106,16 @@ void Slides::next_image()
 			i++;
 		}
 
-		set_animation();
-		QTimer::singleShot(0.5*1000, this, SLOT(image_renderer()));
+
+		if (anim_checker)
+		{
+			image_renderer();
+		}
+		else
+		{
+			set_animation();
+			QTimer::singleShot(anim_period*1000, this, SLOT(image_renderer()));
+		}
 	}
 }
 
@@ -124,7 +133,16 @@ void Slides::previous_image()
 		}
 
 		set_animation();
-		QTimer::singleShot(0.5*1000, this, SLOT(image_renderer()));
+
+		if (anim_checker)
+		{
+			image_renderer();
+		}
+		else
+		{
+			set_animation();
+			QTimer::singleShot(anim_period*1000, this, SLOT(image_renderer()));
+		}
 	}
 }
 
@@ -138,8 +156,15 @@ void Slides::next_shuffle_image()
 		i = rand_int(0, count - 1);
 		if (i == temp) goto LOOP;
 
-		set_animation();
-		QTimer::singleShot(0.5*1000, this, SLOT(image_renderer()));
+		if (anim_checker)
+		{
+			image_renderer();
+		}
+		else
+		{
+			set_animation();
+			QTimer::singleShot(anim_period*1000, this, SLOT(image_renderer()));
+		}
 	}
 }
 
@@ -149,7 +174,7 @@ void Slides::start_animation()
 	QPropertyAnimation *anim = new QPropertyAnimation(effect,"opacity");
 
 	ui->label->setGraphicsEffect(effect);
-	anim->setDuration(0.5*1000);
+	anim->setDuration(anim_period*1000);
 	anim->setStartValue(1.0);
 	anim->setEndValue(0.0);
 	anim->setEasingCurve(QEasingCurve::OutQuad);
@@ -163,7 +188,7 @@ void Slides::end_animation()
 	QPropertyAnimation *anim = new QPropertyAnimation(effect,"opacity");
 
 	ui->label->setGraphicsEffect(effect);
-	anim->setDuration(0.5*1000);
+	anim->setDuration(anim_period*1000);
 	anim->setStartValue(0.0);
 	anim->setEndValue(1.0);
 	connect(anim, &QPropertyAnimation::finished, [=](){});
@@ -365,7 +390,30 @@ void Slides::on_actionStandart_1280x720_triggered()
 	setGeometry(15, 20, 1280, 720);
 }
 
+void Slides::on_actionSlow_triggered()
+{
+	anim_checker = false;
+	anim_period = 1.0;
+}
+
+void Slides::on_actionNormal_triggered()
+{
+	anim_checker = false;
+	anim_period = 0.5;
+}
+
+void Slides::on_actionFast_triggered()
+{
+	anim_checker = false;
+	anim_period = 0.25;
+}
+
 Slides::~Slides()
 {
 	delete ui;
+}
+
+void Slides::on_actionNone_triggered()
+{
+	anim_checker = true;
 }

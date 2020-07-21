@@ -84,6 +84,14 @@ class Slides : public QMainWindow
 
 		void on_actionStandart_1280x720_triggered();
 
+		void on_actionSlow_triggered();
+
+		void on_actionNormal_triggered();
+
+		void on_actionFast_triggered();
+
+		void on_actionNone_triggered();
+
 	private:
 		Ui::Slides *ui;
 
