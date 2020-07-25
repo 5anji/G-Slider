@@ -84,6 +84,34 @@
      <string/>
     </property>
    </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1280</width>
+      <height>720</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>24</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-color: rgb(0, 0, 0);</string>
+    </property>
+    <property name="text">
+     <string>Double-Click to Open Directory</string>
+    </property>
+    <property name="textFormat">
+     <enum>Qt::PlainText</enum>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <zorder>label_2</zorder>
    <zorder>label</zorder>
    <zorder>pushButton_2</zorder>
    <zorder>pushButton</zorder>
@@ -161,7 +189,7 @@
     <string>Open...</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+F</string>
+    <string>Ctrl+O</string>
    </property>
   </action>
   <action name="actionExit">

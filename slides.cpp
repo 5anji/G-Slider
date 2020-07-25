@@ -16,7 +16,7 @@
 #include <QTime>
 #include <QTimer>
 
-QString image_directory[128];
+QString image_directory[128], temp_directory;
 QDir path;
 int i, count, period;
 float anim_period = 0.5;
@@ -30,8 +30,6 @@ Slides::Slides(QWidget *parent)
 
 	QTime time = QTime::currentTime();
 	qsrand((uint)time.msec());
-
-	ui->menubar->setStyleSheet("QToolBar {background: rgb(192,192,192)}");
 }
 
 int Slides::rand_int(int low, int high)
@@ -54,7 +52,7 @@ void Slides::set_image(QString a)
 void Slides::set_animation()
 {
 	start_animation();
-	QTimer::singleShot(anim_period*1000, this, SLOT(end_animation()));
+	end_animation();
 }
 
 void Slides::set_timer()
@@ -97,6 +95,8 @@ void Slides::next_image()
 {
 	if (image_checker)
 	{
+		temp_directory = image_directory[i];
+
 		if (i == count - 1)
 		{
 			i = 0;
@@ -106,7 +106,6 @@ void Slides::next_image()
 			i++;
 		}
 
-
 		if (anim_checker)
 		{
 			image_renderer();
@@ -114,7 +113,7 @@ void Slides::next_image()
 		else
 		{
 			set_animation();
-			QTimer::singleShot(anim_period*1000, this, SLOT(image_renderer()));
+			image_renderer();
 		}
 	}
 }
@@ -123,6 +122,8 @@ void Slides::previous_image()
 {
 	if (image_checker)
 	{
+		temp_directory = image_directory[i];
+
 		if (i == 0)
 		{
 			i = count - 1;
@@ -141,7 +142,7 @@ void Slides::previous_image()
 		else
 		{
 			set_animation();
-			QTimer::singleShot(anim_period*1000, this, SLOT(image_renderer()));
+			image_renderer();
 		}
 	}
 }
@@ -151,6 +152,7 @@ void Slides::next_shuffle_image()
 	if (image_checker)
 	{
 		int temp = i;
+		temp_directory = image_directory[i];
 
 		LOOP:
 		i = rand_int(0, count - 1);
@@ -163,20 +165,24 @@ void Slides::next_shuffle_image()
 		else
 		{
 			set_animation();
-			QTimer::singleShot(anim_period*1000, this, SLOT(image_renderer()));
+			image_renderer();
 		}
 	}
 }
 
 void Slides::start_animation()
 {
+	QPixmap image = temp_directory;
+	ui->label_2->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+	ui->label_2->setPixmap(image.scaled(ui->label->width(), ui->label->height(), Qt::KeepAspectRatio));
+
 	QGraphicsOpacityEffect *effect = new QGraphicsOpacityEffect();
 	QPropertyAnimation *anim = new QPropertyAnimation(effect,"opacity");
 
 	ui->label->setGraphicsEffect(effect);
 	anim->setDuration(anim_period*1000);
-	anim->setStartValue(1.0);
-	anim->setEndValue(0.0);
+	anim->setStartValue(0.0);
+	anim->setEndValue(1.0);
 	anim->setEasingCurve(QEasingCurve::OutQuad);
 	connect(anim, &QPropertyAnimation::finished, [=](){});
 	anim->start(QAbstractAnimation::DeleteWhenStopped);
@@ -185,12 +191,12 @@ void Slides::start_animation()
 void Slides::end_animation()
 {
 	QGraphicsOpacityEffect *effect = new QGraphicsOpacityEffect();
-	QPropertyAnimation *anim = new QPropertyAnimation(effect,"opacity");
+	QPropertyAnimation *anim = new QPropertyAnimation(effect, "opacity");
 
-	ui->label->setGraphicsEffect(effect);
+	ui->label_2->setGraphicsEffect(effect);
 	anim->setDuration(anim_period*1000);
-	anim->setStartValue(0.0);
-	anim->setEndValue(1.0);
+	anim->setStartValue(1.0);
+	anim->setEndValue(0.0);
 	connect(anim, &QPropertyAnimation::finished, [=](){});
 	anim->start(QAbstractAnimation::DeleteWhenStopped);
 }
@@ -203,6 +209,7 @@ void Slides::uncheck_mouse_click()
 void Slides::resizeEvent(QResizeEvent *event)
 {
 	ui->label->resize(ui->centralwidget->width(), ui->centralwidget->height());
+	ui->label_2->resize(ui->centralwidget->width(), ui->centralwidget->height());
 
 	ui->pushButton->resize(ui->centralwidget->width() / 5, ui->centralwidget->height());
 	ui->pushButton->move(4 * ui->centralwidget->width() / 5, 0);
@@ -251,19 +258,28 @@ void Slides::on_pushButton_3_clicked()
 {
 	if (mouse_click_checker)
 	{
-		if (isFullScreen())
+		if (image_checker)
 		{
-			showNormal();
+			if (isFullScreen())
+			{
+				ui->menubar->show();
+				showNormal();
+			}
+			else
+			{
+				ui->menubar->hide();
+				showFullScreen();
+			}
 		}
 		else
 		{
-			showFullScreen();
+			on_actionOpen_triggered();
 		}
 	}
 	else
 	{
 		mouse_click_checker = true;
-		QTimer::singleShot(0.2*1000, this, SLOT(uncheck_mouse_click()));
+		QTimer::singleShot(200, this, SLOT(uncheck_mouse_click()));
 	}
 }
 
@@ -365,11 +381,19 @@ void Slides::on_actionShuffle_toggled(bool arg1)
 
 void Slides::on_actionFull_screen_triggered()
 {
+
+	ui->menubar->hide();
 	showFullScreen();
 }
 
 void Slides::on_actionMaximize_triggered()
 {
+	if (isFullScreen())
+	{
+		ui->menubar->show();
+		showMaximized();
+	}
+
 	if (isMaximized())
 	{
 		showNormal();
@@ -381,12 +405,22 @@ void Slides::on_actionMaximize_triggered()
 }
 
 void Slides::on_actionMinimize_triggered()
-{
+{	
+	if (isFullScreen())
+	{
+		ui->menubar->show();
+	}
+
 	showMinimized();
 }
 
 void Slides::on_actionStandart_1280x720_triggered()
 {
+	if (isFullScreen())
+	{
+		ui->menubar->show();
+	}
+
 	setGeometry(15, 20, 1280, 720);
 }
 
@@ -408,12 +442,12 @@ void Slides::on_actionFast_triggered()
 	anim_period = 0.25;
 }
 
-Slides::~Slides()
-{
-	delete ui;
-}
-
 void Slides::on_actionNone_triggered()
 {
 	anim_checker = true;
+}
+
+Slides::~Slides()
+{
+	delete ui;
 }
