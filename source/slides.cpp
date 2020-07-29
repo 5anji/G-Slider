@@ -30,6 +30,11 @@ Slides::Slides(QWidget *parent)
 
 	QTime time = QTime::currentTime();
 	qsrand((uint)time.msec());
+
+	QPixmap pixmap("extras/right_arrow.png");
+	QIcon ButtonIcon(pixmap);
+	ui->pushButton->setIcon(ButtonIcon);
+	ui->pushButton->setIconSize(pixmap.rect().size());
 }
 
 int Slides::rand_int(int low, int high)
