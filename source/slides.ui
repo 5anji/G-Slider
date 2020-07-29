@@ -46,7 +46,8 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">border:none</string>
+     <string notr="true">border:none;
+outline: none;</string>
     </property>
     <property name="text">
      <string/>
@@ -62,7 +63,8 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">border:none</string>
+     <string notr="true">border:none;
+outline: none;</string>
     </property>
     <property name="text">
      <string/>
@@ -78,7 +80,8 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">border:none</string>
+     <string notr="true">border:none;
+outline: none;</string>
     </property>
     <property name="text">
      <string/>
