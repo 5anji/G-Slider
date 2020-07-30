@@ -20,9 +20,37 @@
 
 # Downloading & installing
 
-## Ubuntu
+## Mac OS X
 
-1. Set up Git and fork my repository. 
+1. Set up HomeBrew:
+
+```sh
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+```
+
+2. Set up Git and fork my repository
+
+```sh
+git clone https://github.com/5anji/G-Slider
+```
+
+If you'd prefer not to use Git, use the 'Download ZIP' button on the right to get the source as a zip file:
+
+3. Enter the path:
+
+```sh
+cd G-Slider/
+```
+
+4. Install:
+
+```sh
+./install.sh
+```
+
+## Linux 
+
+1. Set up Git and fork my repository
 
 ```sh
 git clone https://github.com/5anji/G-Slider
@@ -39,7 +67,5 @@ cd G-Slider/
 3. Install:
 
 ```sh
-sh install.sh
+./install.sh
 ```
-
-Now you can run it by Double-Clicking "G-Slider"
