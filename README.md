@@ -42,9 +42,10 @@ If you'd prefer not to use Git, use the 'Download ZIP' button on the right to ge
 cd G-Slider/
 ```
 
-4. Install:
+4. Install dependencies and build:
 
 ```sh
+brew install qt5
 ./install.sh
 ```
 
@@ -64,7 +65,7 @@ If you'd prefer not to use Git, use the 'Download ZIP' button on the right to ge
 cd G-Slider/
 ```
 
-3. Install:
+3. Build:
 
 ```sh
 ./install.sh

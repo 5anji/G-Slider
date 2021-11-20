@@ -73,8 +73,8 @@ outline: none;</string>
    <widget class="QPushButton" name="pushButton_3">
     <property name="geometry">
      <rect>
-      <x>256</x>
-      <y>0</y>
+      <x>260</x>
+      <y>10</y>
       <width>768</width>
       <height>720</height>
      </rect>
@@ -126,7 +126,7 @@ outline: none;</string>
      <x>0</x>
      <y>0</y>
      <width>1280</width>
-     <height>22</height>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -208,7 +208,7 @@ outline: none;</string>
     <string>Next image</string>
    </property>
    <property name="shortcut">
-    <string>Shift+Right</string>
+    <string>Right</string>
    </property>
   </action>
   <action name="actionPrevious_image">
@@ -216,7 +216,7 @@ outline: none;</string>
     <string>Previous image</string>
    </property>
    <property name="shortcut">
-    <string>Shift+Left</string>
+    <string>Left</string>
    </property>
   </action>
   <action name="action30_seconds">
@@ -278,7 +278,7 @@ outline: none;</string>
     <string>Full-screen</string>
    </property>
    <property name="shortcut">
-    <string>F</string>
+    <string>Ctrl+F</string>
    </property>
   </action>
   <action name="actionMaximize">
@@ -286,7 +286,7 @@ outline: none;</string>
     <string>Maximize/Unmaximize</string>
    </property>
    <property name="shortcut">
-    <string>M</string>
+    <string>F11, M</string>
    </property>
   </action>
   <action name="actionMinimize">

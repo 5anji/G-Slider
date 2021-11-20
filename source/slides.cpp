@@ -159,7 +159,7 @@ void Slides::next_shuffle_image()
 		int temp = i;
 		temp_directory = image_directory[i];
 
-		LOOP:
+LOOP:
 		i = rand_int(0, count - 1);
 		if (i == temp) goto LOOP;
 
@@ -182,7 +182,7 @@ void Slides::start_animation()
 	ui->label_2->setPixmap(image.scaled(ui->label->width(), ui->label->height(), Qt::KeepAspectRatio));
 
 	QGraphicsOpacityEffect *effect = new QGraphicsOpacityEffect();
-	QPropertyAnimation *anim = new QPropertyAnimation(effect,"opacity");
+	QPropertyAnimation *anim = new QPropertyAnimation(effect, "opacity");
 
 	ui->label->setGraphicsEffect(effect);
 	anim->setDuration(anim_period*1000);
